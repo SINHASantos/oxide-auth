@@ -140,7 +140,7 @@ fn solicitor(request: &mut Request, grant: Solicitation<'_>) -> OwnerConsent<OAu
         OwnerConsent::InProgress(response.into())
     } else if request.method() == "POST" {
         // No real user authentication is done here, in production you MUST use session keys or equivalent
-        if let Some(_) = request.get_param("allow") {
+        if request.get_param("allow").is_some() {
             OwnerConsent::Authorized("dummy user".to_string())
         } else {
             OwnerConsent::Denied
