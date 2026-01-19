@@ -49,7 +49,7 @@ impl AccessTokenSetup {
         registrar.register_client(client);
 
         let basic_authorization =
-            STANDARD.encode(&format!("{}:{}", EXAMPLE_CLIENT_ID, EXAMPLE_PASSPHRASE));
+            STANDARD.encode(format!("{}:{}", EXAMPLE_CLIENT_ID, EXAMPLE_PASSPHRASE));
 
         AccessTokenSetup {
             registrar,
@@ -84,7 +84,7 @@ impl AccessTokenSetup {
         registrar.register_client(client);
 
         let basic_authorization =
-            STANDARD.encode(&format!("{}:{}", EXAMPLE_CLIENT_ID, EXAMPLE_PASSPHRASE));
+            STANDARD.encode(format!("{}:{}", EXAMPLE_CLIENT_ID, EXAMPLE_PASSPHRASE));
 
         AccessTokenSetup {
             registrar,
@@ -118,7 +118,7 @@ impl AccessTokenSetup {
         let authtoken = authorizer.authorize(authrequest).unwrap();
         registrar.register_client(client);
 
-        let basic_authorization = STANDARD.encode(&format!("{}:", EXAMPLE_CLIENT_ID));
+        let basic_authorization = STANDARD.encode(format!("{}:", EXAMPLE_CLIENT_ID));
 
         AccessTokenSetup {
             registrar,
@@ -363,7 +363,7 @@ fn access_request_unknown_client() {
         ),
         auth: Some(
             "Basic ".to_string()
-                + &STANDARD.encode(&format!("{}:{}", "SomeOtherClient", EXAMPLE_PASSPHRASE)),
+                + &STANDARD.encode(format!("{}:{}", "SomeOtherClient", EXAMPLE_PASSPHRASE)),
         ),
     };
 
@@ -408,7 +408,7 @@ fn access_request_wrong_password() {
         ),
         auth: Some(
             "Basic ".to_string()
-                + &STANDARD.encode(&format!("{}:{}", EXAMPLE_CLIENT_ID, "NotTheRightPassphrase")),
+                + &STANDARD.encode(format!("{}:{}", EXAMPLE_CLIENT_ID, "NotTheRightPassphrase")),
         ),
     };
 
@@ -430,7 +430,7 @@ fn access_request_empty_password() {
             .iter()
             .to_single_value_query(),
         ),
-        auth: Some("Basic ".to_string() + &STANDARD.encode(&format!("{}:{}", EXAMPLE_CLIENT_ID, ""))),
+        auth: Some("Basic ".to_string() + &STANDARD.encode(format!("{}:{}", EXAMPLE_CLIENT_ID, ""))),
     };
 
     setup.test_simple_error(empty_password);

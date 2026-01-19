@@ -54,7 +54,7 @@ impl RefreshTokenSetup {
         let refresh_token = issued.refresh.clone().unwrap();
 
         let basic_authorization =
-            STANDARD.encode(&format!("{}:{}", EXAMPLE_CLIENT_ID, EXAMPLE_PASSPHRASE));
+            STANDARD.encode(format!("{}:{}", EXAMPLE_CLIENT_ID, EXAMPLE_PASSPHRASE));
         let basic_authorization = format!("Basic {}", basic_authorization);
 
         RefreshTokenSetup {
@@ -255,7 +255,7 @@ fn public_private_invalid_grant() {
     );
     setup.registrar.register_client(client);
 
-    let basic_authorization = STANDARD.encode(&format!("{}:{}", "PrivateClient", EXAMPLE_PASSPHRASE));
+    let basic_authorization = STANDARD.encode(format!("{}:{}", "PrivateClient", EXAMPLE_PASSPHRASE));
     let basic_authorization = format!("Basic {}", basic_authorization);
 
     let authenticated = CraftedRequest {
