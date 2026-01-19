@@ -83,10 +83,7 @@ impl AuthorizationSetup {
                     .query_pairs()
                     .collect::<HashMap<_, _>>()
                     .get("error")
-                    .is_some() =>
-            {
-                ()
-            }
+                    .is_some() => {}
             other => panic!("Expected location with error set description: {:?}", other),
         }
     }
