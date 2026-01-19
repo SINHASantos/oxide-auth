@@ -36,7 +36,7 @@ impl AuthorizationSetup {
 
     fn test_success(&mut self, request: CraftedRequest) {
         let response = authorization_flow(
-            &mut self.registrar,
+            &self.registrar,
             &mut self.authorizer,
             &mut Allow(EXAMPLE_OWNER_ID.to_string()),
         )
@@ -53,7 +53,7 @@ impl AuthorizationSetup {
 
     fn test_silent_error(&mut self, request: CraftedRequest) {
         match authorization_flow(
-            &mut self.registrar,
+            &self.registrar,
             &mut self.authorizer,
             &mut Allow(EXAMPLE_OWNER_ID.to_string()),
         )
@@ -69,8 +69,8 @@ impl AuthorizationSetup {
     where
         P: OwnerSolicitor<CraftedRequest>,
     {
-        let response = authorization_flow(&mut self.registrar, &mut self.authorizer, &mut pagehandler)
-            .execute(request);
+        let response =
+            authorization_flow(&self.registrar, &mut self.authorizer, &mut pagehandler).execute(request);
 
         let response = match response {
             Err(resp) => panic!("Expected redirect with error set: {:?}", resp),

@@ -65,7 +65,7 @@ impl ClientCredentialsSetup {
     where
         S: OwnerSolicitor<CraftedRequest>,
     {
-        let mut flow = client_credentials_flow(&mut self.registrar, &mut self.issuer, &mut solicitor);
+        let mut flow = client_credentials_flow(&self.registrar, &mut self.issuer, &mut solicitor);
         flow.allow_credentials_in_body(self.allow_credentials_in_body);
         let response = flow.execute(request).expect("Expected non-error reponse");
 
@@ -76,7 +76,7 @@ impl ClientCredentialsSetup {
     where
         S: OwnerSolicitor<CraftedRequest>,
     {
-        let mut flow = client_credentials_flow(&mut self.registrar, &mut self.issuer, &mut solicitor);
+        let mut flow = client_credentials_flow(&self.registrar, &mut self.issuer, &mut solicitor);
         flow.allow_credentials_in_body(self.allow_credentials_in_body);
         let response = flow.execute(request).expect("Expected non-error response");
 
@@ -87,7 +87,7 @@ impl ClientCredentialsSetup {
     where
         S: OwnerSolicitor<CraftedRequest>,
     {
-        let mut flow = client_credentials_flow(&mut self.registrar, &mut self.issuer, &mut solicitor);
+        let mut flow = client_credentials_flow(&self.registrar, &mut self.issuer, &mut solicitor);
         flow.allow_credentials_in_body(self.allow_credentials_in_body);
         let response = flow.execute(request).expect("Expected non-error response");
 
