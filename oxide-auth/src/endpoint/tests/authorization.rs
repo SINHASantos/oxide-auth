@@ -163,9 +163,9 @@ fn auth_request_silent_mismatching_redirect() {
 fn auth_request_silent_mismatching_literal_redirect() {
     // The redirect_uri does not match if stringly matched.
     let mut setup = AuthorizationSetup::new();
-    const UNIQUE_CLIENT: &'static str = "client_auth_request_silent_mismatching_literal_redirect";
-    const REGISTERED_URL: &'static str = "https://right.client.example/endpoint";
-    const TRIED_URL: &'static str = "https://right.client.example/endpoint/";
+    const UNIQUE_CLIENT: &str = "client_auth_request_silent_mismatching_literal_redirect";
+    const REGISTERED_URL: &str = "https://right.client.example/endpoint";
+    const TRIED_URL: &str = "https://right.client.example/endpoint/";
 
     let client = Client::confidential(
         UNIQUE_CLIENT,
