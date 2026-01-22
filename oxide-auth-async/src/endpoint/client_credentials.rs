@@ -176,7 +176,7 @@ where
                 let mut json = ErrorDescription::new(error);
                 let mut response = self.endpoint.inner.response(
                     &mut request,
-                    Template::new_unauthorized(None, Some(json.description())).into(),
+                    Template::new_unauthorized(None, Some(json.description())),
                 )?;
 
                 response
@@ -199,10 +199,7 @@ where
             Ok(token) => token,
         };
 
-        let mut response = self
-            .endpoint
-            .inner
-            .response(&mut request, Template::new_ok().into())?;
+        let mut response = self.endpoint.inner.response(&mut request, Template::new_ok())?;
         response
             .body_json(&token.to_json())
             .map_err(|err| self.endpoint.inner.web_error(err))?;
@@ -217,7 +214,7 @@ fn client_credentials_error<E: Endpoint<R>, R: WebRequest>(
         ClientCredentialsError::Ignore => return Err(endpoint.error(OAuthError::DenySilently)),
         ClientCredentialsError::Invalid(mut json) => {
             let mut response =
-                endpoint.response(request, Template::new_bad(Some(json.description())).into())?;
+                endpoint.response(request, Template::new_bad(Some(json.description())))?;
 
             response.client_error().map_err(|err| endpoint.web_error(err))?;
             response
@@ -228,7 +225,7 @@ fn client_credentials_error<E: Endpoint<R>, R: WebRequest>(
         ClientCredentialsError::Unauthorized(mut json, scheme) => {
             let mut response = endpoint.response(
                 request,
-                Template::new_unauthorized(None, Some(json.description())).into(),
+                Template::new_unauthorized(None, Some(json.description())),
             )?;
 
             response
@@ -341,21 +338,21 @@ impl<R: WebRequest> ClientCredentialsRequest for WrappedRequest<R> {
         self.error.is_none()
     }
 
-    fn authorization(&self) -> Option<(Cow<str>, Cow<[u8]>)> {
+    fn authorization(&self) -> Option<(Cow<'_, str>, Cow<'_, [u8]>)> {
         self.authorization
             .as_ref()
             .map(|auth| (auth.0.as_str().into(), auth.1.as_slice().into()))
     }
 
-    fn grant_type(&self) -> Option<Cow<str>> {
+    fn grant_type(&self) -> Option<Cow<'_, str>> {
         self.body.unique_value("grant_type")
     }
 
-    fn scope(&self) -> Option<Cow<str>> {
+    fn scope(&self) -> Option<Cow<'_, str>> {
         self.body.unique_value("scope")
     }
 
-    fn extension(&self, key: &str) -> Option<Cow<str>> {
+    fn extension(&self, key: &str) -> Option<Cow<'_, str>> {
         self.body.unique_value(key)
     }
 
