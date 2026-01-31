@@ -199,6 +199,7 @@ impl IssuedToken {
     /// # use oxide_auth::primitives::issuer::RefreshedToken;
     /// use oxide_auth::primitives::grant::Grant;
     /// use oxide_auth::primitives::issuer::{Issuer, IssuedToken};
+    /// use oxide_auth::OAuthOpaqueError;
     ///
     /// struct MyIssuer;
     ///
@@ -210,14 +211,14 @@ impl IssuedToken {
     /// }
     ///
     /// impl Issuer for MyIssuer {
-    ///     fn issue(&mut self, mut grant: Grant) -> Result<IssuedToken, ()> {
+    ///     fn issue(&mut self, mut grant: Grant) -> Result<IssuedToken, OAuthOpaqueError> {
     ///         let token = self.access_token(&grant);
     ///         Ok(IssuedToken::without_refresh(token, grant.until))
     ///     }
     ///     // …
-    /// # fn recover_token<'t>(&'t self, token: &'t str) -> Result<Option<Grant>, ()> { Err(()) }
-    /// # fn recover_refresh<'t>(&'t self, token: &'t str) -> Result<Option<Grant>, ()> { Err(()) }
-    /// # fn refresh(&mut self, _: &str, _: Grant) -> Result<RefreshedToken, ()> { Err(()) }
+    /// # fn recover_token<'t>(&'t self, token: &'t str) -> Result<Option<Grant>, OAuthOpaqueError> { Err(OAuthOpaqueError) }
+    /// # fn recover_refresh<'t>(&'t self, token: &'t str) -> Result<Option<Grant>, OAuthOpaqueError> { Err(OAuthOpaqueError) }
+    /// # fn refresh(&mut self, _: &str, _: Grant) -> Result<RefreshedToken, OAuthOpaqueError> { Err(OAuthOpaqueError) }
     /// }
     /// ```
     pub fn without_refresh(token: String, until: Time) -> Self {
